@@ -29,6 +29,8 @@
         </activity>
         <activity android:name="ResultActivity">
 		</activity>
+		<service android:name=".DessertService">
+		</service>
     </application>
 
 </manifest>

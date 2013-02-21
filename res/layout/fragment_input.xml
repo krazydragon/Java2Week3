@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/intro_text"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
         android:id="@+id/InputFormLayout"
@@ -25,13 +25,6 @@
         <LinearLayout
             android:layout_width="325dp"
             android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="112dp"
-                android:layout_height="wrap_content"
-                android:text="@string/spinner_label"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/textView1"
@@ -49,18 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp" >
 
-            <Spinner
-                android:id="@+id/inputSpinner"
-                style="@style/AppTheme"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_weight="1"
-                android:entries="@array/zipcode_arrays"
-                android:prompt="@string/zipcode_prompt"
-                android:spinnerMode="dropdown" />
-
             <RadioGroup
                 android:id="@+id/inputRadioGroup"
                 android:layout_width="144dp"
@@ -71,7 +52,6 @@
                     android:id="@+id/cookieButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
                     android:text="@string/rButton1" />
 
                 <RadioButton
@@ -94,24 +74,15 @@
 
             </RadioGroup>
 
-        </LinearLayout>
-	<ImageView
+            <ImageView
                 android:id="@+id/dessert_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/dessert_image_text"
                 android:src="@drawable/cookies" />
-    </LinearLayout>
 
-   
-    <Button
-        android:id="@+id/inputButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:text="@string/input_button_text" />
+        </LinearLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/nothingView"

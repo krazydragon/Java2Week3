@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 
 
+
 import com.rbarnes.java2week3.InputFragment.InputListener;
 import com.rbarnes.lib.FileInterface;
 import com.rbarnes.lib.WebInterface;
@@ -45,6 +46,7 @@ public class MainActivity extends FragmentActivity implements InputListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_input_form);
+		startService(new Intent(this, DessertService.class));
 		_context = this;
 		_resulutIntent = new Intent(this, ResultActivity.class);
 		_oldLocation = new HashMap<String, String>();
@@ -55,6 +57,7 @@ public class MainActivity extends FragmentActivity implements InputListener{
 		if (!connected){
 			displayResults();
 		}
+		
 	}
 	
 	@Override

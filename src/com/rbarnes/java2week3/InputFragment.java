@@ -4,6 +4,8 @@ package com.rbarnes.java2week3;
 
 
 
+
+
 import android.support.v4.app.Fragment;
 import android.app.Activity;
 import android.os.Bundle;
@@ -43,9 +45,7 @@ public class InputFragment extends Fragment implements OnClickListener {
 	   @Override
 	   public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 		   RelativeLayout view = (RelativeLayout)inflater.inflate(R.layout.fragment_input,container,false);
-	      
 		 //Detect form elements
-			Button inputButton = (Button)view.findViewById(R.id.inputButton);
 			Button cookieButton = (Button)view.findViewById(R.id.cookieButton);
 			Button pieButton = (Button)view.findViewById(R.id.pieButton);
 			Button cakeButton = (Button)view.findViewById(R.id.cakeButton);
@@ -56,7 +56,10 @@ public class InputFragment extends Fragment implements OnClickListener {
 			pieButton.setOnClickListener(this);
 			cakeButton.setOnClickListener(this);
 			candyButton.setOnClickListener(this);
-			inputButton.setOnClickListener(this);
+
+		 
+			
+			
 			
 	      
 	      return view;
@@ -66,19 +69,10 @@ public class InputFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		RadioGroup inputGroup = (RadioGroup)getActivity().findViewById(R.id.inputRadioGroup);
+		
 		ImageView dessertView = (ImageView)getActivity().findViewById(R.id.dessert_view);
 		switch(v.getId()){
-		//Submit Form
-		case R.id.inputButton:
-			//show results
-			int selectedButtonId = inputGroup.getCheckedRadioButtonId();
-			RadioButton selectedButton = (RadioButton) getActivity().findViewById(selectedButtonId);
-			Spinner inputSpinner = (Spinner) getActivity().findViewById(R.id.inputSpinner);
-			String buttonText = (String) selectedButton.getText();
-			String spinnerText = String.valueOf(inputSpinner.getSelectedItem());
-			listener.onDessertSearch(buttonText,spinnerText);
-
+		
 		//Change image when button is pressed	
 		case R.id.cookieButton:
 			dessertView.setImageResource(R.drawable.cookies);

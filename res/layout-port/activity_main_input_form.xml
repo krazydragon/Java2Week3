@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <fragment
         android:id="@+id/inputFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        class="com.rbarnes.java2week3.InputFragment" />
-   
+        android:layout_weight="1"
+        class="com.rbarnes.java2week3.InputFragment" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/resultFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        class="com.rbarnes.java2week3.ResultFragment" />
 
 </LinearLayout>
