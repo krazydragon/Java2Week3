@@ -50,14 +50,6 @@ public class MainActivity extends FragmentActivity implements InputListener{
 		_context = this;
 		_resulutIntent = new Intent(this, ResultActivity.class);
 		_oldLocation = new HashMap<String, String>();
-		Boolean connected = WebInterface.getConnectionStatus(_context);
-		
-		
-		
-		if (!connected){
-			displayResults();
-		}
-		
 	}
 	
 	@Override
@@ -66,85 +58,11 @@ public class MainActivity extends FragmentActivity implements InputListener{
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	//Display results
-	private void displayResults(){
-		
-		startActivity(_resulutIntent);
-	}
-	//Submit search
-	private void getLocations(String dessert, String zipCode){
-		String baseUrl = "http://local.yahooapis.com/LocalSearchService/V3/localSearch?appid=qJIjRlbV34GJZfg2AwqSWVV03eeg8SpTQKy5PZqSfjlRrItt5hS2n3PIysdPU_CCIQlCGXIGjoTDESp3l42Ueic3O1EaYXU-&query="+dessert+"&zip="+zipCode+"&results=1&output=json";
-		URL finalURL;
-		try{
-			finalURL = new URL(baseUrl);
-			LocationRequest lr = new LocationRequest();
-			lr.execute(finalURL);
-			Log.i("URL ", baseUrl);
-			
-		}catch(MalformedURLException e){
-			Log.e("BAD URL","MALFORMED URL");
-			finalURL = null;
-		}
-	}
 	
-	//get results
-	private class LocationRequest extends AsyncTask<URL, Void, String>{
-		@Override
-		protected String doInBackground(URL... urls){
-			String response = "";
-			
-			for(URL url: urls){
-				
-				response = WebInterface.getUrlStringResponse(url);
-			}
-			return response;
-		}
-		
-		@Override
-		protected void onPostExecute(String result){
-			Log.i("URL RESPONSE", result);
-			try{
-				JSONObject json = new JSONObject(result);
-				JSONObject locations = json.getJSONObject("ResultSet");
-				if(locations.getString("totalResultsAvailable").compareTo("0")==0){
-					_toast = Toast.makeText(_context, "No Results" , Toast.LENGTH_SHORT);
-					_toast.show();
-				}else{
-					JSONObject location = locations.getJSONObject("Result");
-					if(location != null){
-						_toast = Toast.makeText(_context, "Saving File.", Toast.LENGTH_SHORT);
-						_toast.show();
-						_oldLocation.put("Title",  location.getString("Title"));
-						_oldLocation.put("Address", location.getString("Address"));
-						_oldLocation.put("City", location.getString("City"));
-						_oldLocation.put("State", location.getString("State"));
-						_oldLocation.put("Phone", location.getString("Phone"));
-						_oldLocation.put("Coords", location.getString("Latitude")+","+location.getString("Longitude"));
-						
-						
-						
-						//Save File
-						FileInterface.storeObjectFile(_context, "oldLocation", _oldLocation, false);
-						//Show data
-						//Add Location Display
-						displayResults();
-					}else{
-						_toast = Toast.makeText(_context, "Something went wrong" , Toast.LENGTH_SHORT);
-						_toast.show();
-					}
-				}
-				
-			}catch(JSONException e){
-				Log.e("JSON", "JSON OBJECT EXCEPTION");
-			}
-			
-		}
-	}
-
 	@Override
 	public void onDessertSearch(String zipCode, String category) {
 		
-		getLocations(zipCode,category);
+		
 	}
 
 	@Override

@@ -50,6 +50,9 @@ public class DessertService extends Service{
 			}
 		 _oldLocation = new HashMap<String, String>();
 		 getLocations("cookies", "98404");
+		 getLocations("cakes", "98404");
+		 getLocations("candy", "98404");
+		 getLocations("pies", "98404");
 		 this.stopSelf();
 		 
 	    return Service.START_NOT_STICKY;
