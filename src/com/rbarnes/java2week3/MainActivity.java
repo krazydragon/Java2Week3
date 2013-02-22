@@ -11,10 +11,12 @@ import org.json.JSONObject;
 
 import com.rbarnes.java2week3.InputFragment.InputListener;
 import com.rbarnes.other.Dessert;
+import com.rbarnes.other.DessertDB;
 
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -40,6 +42,8 @@ public class MainActivity extends FragmentActivity implements InputListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_input_form);
+
+		
 		startService(new Intent(this, DessertService.class));
 		_context = this;
 		_resulutIntent = new Intent(this, ResultActivity.class);

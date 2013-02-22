@@ -23,7 +23,7 @@ public class DessertDB extends SQLiteOpenHelper implements BaseColumns{
 
 	@Override
 	public void onCreate(SQLiteDatabase db){
-		db.execSQL("CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + TITLE + " TEXT, );");
+		db.execSQL("CREATE TABLE " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + CATEGORY + " TEXT, " + TITLE + " TEXT, " + ADDRESS + " TEXT, " + CITY + " TEXT, " + STATE + " TEXT," + PHONE + " TEXT );");
 
 		ContentValues values = new ContentValues();
 

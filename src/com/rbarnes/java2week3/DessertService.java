@@ -10,6 +10,13 @@
 package com.rbarnes.java2week3;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -19,12 +26,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import com.rbarnes.lib.FileInterface;
-
 
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -39,6 +45,8 @@ public class DessertService extends Service{
 	static String _connectionType = "Unavailable";
 	Toast _toast;
 	HashMap<String, String> _oldLocation;
+	private Cursor cursor;
+	private static int counter = 0;
 	
 	 @Override
 	  public int onStartCommand(Intent intent, int flags, int startId) {
@@ -50,9 +58,13 @@ public class DessertService extends Service{
 			}
 		 _oldLocation = new HashMap<String, String>();
 		 getLocations("cookies", "98404");
+		 counter++;
 		 getLocations("cakes", "98404");
+		 counter++;
 		 getLocations("candy", "98404");
+		 counter++;
 		 getLocations("pies", "98404");
+		 counter = 0;
 		 this.stopSelf();
 		 
 	    return Service.START_NOT_STICKY;
@@ -150,6 +162,151 @@ public class DessertService extends Service{
   		
   		return response;
   	}
+  	@SuppressWarnings("resource")
+	public static Boolean storeStringFile(Context context, String filename, String content, Boolean external){
+		try{
+			File file;
+			FileOutputStream fos;
+			//Check if external storage flag is set
+			if(external){
+				file = new File(context.getExternalFilesDir(null), filename);
+				fos =  new FileOutputStream(file);
+			}else{
+				fos =  context.openFileOutput(filename, Context.MODE_PRIVATE);
+			}
+			fos.write(content.getBytes());
+			fos.close();
+			
+			
+		}catch(IOException e){
+			Log.e("WRITE ERROR", filename);
+		}
+		return true;
+	}
+	
+	/**
+	 * Store object file.
+	 *
+	 * @param context the context
+	 * @param filename the filename
+	 * @param content the content
+	 * @param external the external
+	 * @return the boolean
+	 */
+	@SuppressWarnings("resource")
+	public static Boolean storeObjectFile(Context context, String filename, Object content, Boolean external){
+		try{
+			File file;
+			FileOutputStream fos;
+			ObjectOutputStream oos;
+			//Check if external storage flag is set
+			if(external){
+				file = new File(context.getExternalFilesDir(null), filename);
+				fos =  new FileOutputStream(file);
+			}else{
+				
+				fos =  context.openFileOutput(filename, Context.MODE_PRIVATE);
+			}
+			oos =  new ObjectOutputStream(fos);
+			oos.writeObject(content);
+			oos.close();
+			fos.close();
+		}catch(IOException e){
+			Log.e("WRITE ERROR", filename);
+		}
+			return true;
+		}
+	
+	/**
+	 * Read string file.
+	 *
+	 * @param context the context
+	 * @param filename the filename
+	 * @param external the external
+	 * @return the string
+	 */
+	@SuppressWarnings("resource")
+	public static String readStringFile(Context context, String filename, Boolean external){
+		String content = "";
+		try{
+			File file;
+			FileInputStream fis;
+			//Check if external storage flag is set
+			if(external){
+				file = new File(context.getExternalFilesDir(null), filename);
+				fis =  new FileInputStream(file);
+			}else{
+				file = new File(filename);
+				fis =  context.openFileInput(filename);
+			}
+			BufferedInputStream bin = new BufferedInputStream(fis);
+			
+			byte[] contentBytes = new byte[1024];
+			int bytesRead = 0;
+			StringBuffer contentBuffer = new StringBuffer();
+			
+			while((bytesRead = bin.read(contentBytes)) != -1){
+				
+				content = new String(contentBytes,0,bytesRead);
+				contentBuffer.append(content);
+				
+			}
+			content = contentBuffer.toString();
+			fis.close();
+			
+			
+		}catch(FileNotFoundException e){
+			Log.e("READ ERROR","FILE NOT FOUND " + filename);
+			return null;
+		}catch(IOException e){
+			Log.e("READ ERROR", "I/O ERROR");
+		}
+		
+		return content;
+	}
+	
+	/**
+	 * Read object file.
+	 *
+	 * @param context the context
+	 * @param filename the filename
+	 * @param external the external
+	 * @return the object
+	 */
+	@SuppressWarnings("resource")
+	public static Object readObjectFile(Context context, String filename, Boolean external){
+		Object content = new Object();
+		try{
+			File file;
+			FileInputStream fis;
+			//Check if external storage flag is set
+			if(external){
+				file = new File(context.getExternalFilesDir(null), filename);
+				fis =  new FileInputStream(file);
+			}else{
+				file = new File(filename);
+				fis =  context.openFileInput(filename);
+			}
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			
+			try{
+				content = ois.readObject();
+			}catch(ClassNotFoundException e){
+				Log.e("READ ERROR","INVALD JAVA OBJECT FILE");
+			}
+			ois.close();
+			fis.close();
+			
+			
+		}catch(FileNotFoundException e){
+			Log.e("READ ERROR","FILE NOT FOUND " + filename);
+			return null;
+		}catch(IOException e){
+			Log.e("READ ERROR", "I/O ERROR");
+		}
+		
+		return content;
+	}
   	private void getLocations(String dessert, String zipCode){
 		String baseUrl = "http://local.yahooapis.com/LocalSearchService/V3/localSearch?appid=qJIjRlbV34GJZfg2AwqSWVV03eeg8SpTQKy5PZqSfjlRrItt5hS2n3PIysdPU_CCIQlCGXIGjoTDESp3l42Ueic3O1EaYXU-&query="+dessert+"&zip="+zipCode+"&results=1&output=json";
 		URL finalURL;
@@ -202,7 +359,7 @@ public class DessertService extends Service{
 						
 						
 						//Save File
-						FileInterface.storeObjectFile(_context, "oldLocation", _oldLocation, false);
+						storeObjectFile(_context, "oldLocation", _oldLocation, false);
 						//Show data
 						
 					}else{
