@@ -31,6 +31,8 @@
 		</activity>
 		<service android:name=".DessertService">
 		</service>
+		<provider android:name="DessertContentProvider" 
+            android:authorities="com.rbarnes.other.DessertContentProvider">
+        </provider>
     </application>
-
 </manifest>

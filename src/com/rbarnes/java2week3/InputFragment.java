@@ -15,10 +15,8 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
+
 
 
 public class InputFragment extends Fragment implements OnClickListener {
