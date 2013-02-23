@@ -38,7 +38,6 @@ public class FileInterface {
 	 * @param external the external
 	 * @return the boolean
 	 */
-	@SuppressWarnings("resource")
 	public static Boolean storeStringFile(Context context, String filename, String content, Boolean external){
 		try{
 			File file;
@@ -69,7 +68,6 @@ public class FileInterface {
 	 * @param external the external
 	 * @return the boolean
 	 */
-	@SuppressWarnings("resource")
 	public static Boolean storeObjectFile(Context context, String filename, Object content, Boolean external){
 		try{
 			File file;
@@ -101,7 +99,6 @@ public class FileInterface {
 	 * @param external the external
 	 * @return the string
 	 */
-	@SuppressWarnings("resource")
 	public static String readStringFile(Context context, String filename, Boolean external){
 		String content = "";
 		try{
@@ -149,7 +146,6 @@ public class FileInterface {
 	 * @param external the external
 	 * @return the object
 	 */
-	@SuppressWarnings("resource")
 	public static Object readObjectFile(Context context, String filename, Boolean external){
 		Object content = new Object();
 		try{
