@@ -23,8 +23,8 @@ public class InputFragment extends Fragment implements OnClickListener {
 	private InputListener listener;
 	
 	public interface InputListener{
-		public void onDessertSearch(String zipCode, String category);
-		public void addZip();
+		public void onDessertSearch();
+		
 		
 	}
 	// onCreate
@@ -44,6 +44,7 @@ public class InputFragment extends Fragment implements OnClickListener {
 	   public View onCreateView(LayoutInflater inflater,ViewGroup container,Bundle savedInstanceState) {
 		   RelativeLayout view = (RelativeLayout)inflater.inflate(R.layout.fragment_input,container,false);
 		 //Detect form elements
+		   	Button inputButton = (Button)view.findViewById(R.id.inputButton);
 			Button cookieButton = (Button)view.findViewById(R.id.cookieButton);
 			Button pieButton = (Button)view.findViewById(R.id.pieButton);
 			Button cakeButton = (Button)view.findViewById(R.id.cakeButton);
@@ -54,6 +55,7 @@ public class InputFragment extends Fragment implements OnClickListener {
 			pieButton.setOnClickListener(this);
 			cakeButton.setOnClickListener(this);
 			candyButton.setOnClickListener(this);
+			inputButton.setOnClickListener(this);
 
 		 
 			
@@ -83,6 +85,9 @@ public class InputFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.candyButton:
 			dessertView.setImageResource(R.drawable.candy);
+			break;
+		case R.id.inputButton:
+			listener.onDessertSearch();
 			break;
 		
 		

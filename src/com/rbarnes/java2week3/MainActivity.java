@@ -11,12 +11,8 @@ import org.json.JSONObject;
 
 import com.rbarnes.java2week3.InputFragment.InputListener;
 import com.rbarnes.other.Dessert;
-import com.rbarnes.other.DessertDB;
-
-
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -58,15 +54,17 @@ public class MainActivity extends FragmentActivity implements InputListener{
 	}
 	
 	@Override
-	public void onDessertSearch(String zipCode, String category) {
-		
+	public void onDessertSearch() {
+		//
+		ResultFragment fragment = (ResultFragment)getSupportFragmentManager().findFragmentById(R.id.resultFragment);
+		if ((fragment != null)&& fragment.isInLayout()){
+			
+		} else {
+			startActivity(_resulutIntent);
+		}
 		
 	}
 
-	@Override
-	public void addZip() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

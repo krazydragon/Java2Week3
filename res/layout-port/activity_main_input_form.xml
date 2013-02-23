@@ -8,16 +8,9 @@
     <fragment
         android:id="@+id/inputFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         class="com.rbarnes.java2week3.InputFragment" >
     </fragment>
-
-    <fragment
-        android:id="@+id/resultFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        class="com.rbarnes.java2week3.ResultFragment" />
 
 </LinearLayout>
